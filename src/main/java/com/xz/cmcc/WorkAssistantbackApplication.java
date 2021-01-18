@@ -14,9 +14,9 @@ public class WorkAssistantbackApplication {
 		SpringApplication.run(WorkAssistantbackApplication.class, args);
 	}
 	
-	@RequestMapping(value= "/index",method=RequestMethod.GET)
-	public String hello(String username) {
-		return " 欢迎 !";
+	@RequestMapping(value= "index")
+	public String index() {
+		return "index";
 	}
 
 }
