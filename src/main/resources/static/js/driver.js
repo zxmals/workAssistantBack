@@ -7,6 +7,13 @@ $(document).ready(function(){
         $(this).addClass('active').siblings().removeClass('active');
         $('#'+$(this).attr("title")).removeClass("hidden").siblings().addClass('hidden');
     })
+
+    $('#software table table a').click(function (){
+        $.get("workassist/download?softwear_id="+this.attr("id")
+            ,function (data,status){
+            alert(status,data)
+            });
+    });
 });
 
 
