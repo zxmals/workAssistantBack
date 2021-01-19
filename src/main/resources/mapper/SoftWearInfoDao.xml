@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xz.cmcc.dao.SoftWearInfoDao">
+	<select id="querySoftWearInfo" resultType="com.xz.cmcc.entity.SoftWearInfo" flushCache="true" useCache="false">
+		SELECT  softwear_id,softwear_name1,softwear_name2,category_name,store_path,create_date
+		FROM softwearinfo	
+	</select>
+	
+	<select id="querySoftWearInfoById" resultType="com.xz.cmcc.entity.SoftWearInfo" flushCache="true" useCache="false">
+		SELECT  softwear_id,softwear_name1,softwear_name2,category_name,store_path,create_date
+		FROM softwearinfo	
+		where softwear_id = #{softwear_id}
+	</select>
+</mapper>        

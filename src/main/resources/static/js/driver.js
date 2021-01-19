@@ -83,10 +83,31 @@ function getDeviceInfo(){
 
 }
 
+function generateSoftInfo(title,data){
+    let imgsrc = "";
+    imgsrc = "操作系统"==title?"os.png":("办公软件"==title?"office.png":("浏览器"==title?"browser.png":("安全软件"==title?"safe.png":"other_.png")))
+    let info = '<tr class="active">\n' +
+        '                        <td class="row-vertical-center"><strong><h3 class="text-primary">\n' +
+        '                            <img src="img/'+imgsrc+'" alt="" class="img-rounded" style="width: 70px;height: 70px">\n' +
+        title+'</h3></strong></td>\n' +
+        '                        <td class="text-center">\n' +
+        '                            <table class="table table-bordered">'
+    for(let i in data){
+        info += '<tr>' +
+            '<td>' + data[i].softwear_name1 + '</td>'
+        info += '<td><p class="text-primary" style="width: auto!important;"><a id="'+data[i].softwear_id+'" href="#"><span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span> 点击下载</a></p></td>' +
+            '</tr>';
+    }
+    info += '</table></td></tr>';
+    return info;
+}
+
 $(function() {
     let info = getDeviceInfo();
     $('#deviceuse ul').html(info);
-    /*首先根据MAC地址查询*/
+    /*
+    根据用户设备信息（mac/ip)获取用户以及资产信息
+    首先根据MAC地址查询*/
     $.get("workassist/getuserpropbymac?macAddress="+macAddress,
         function(data,status){
             if(data.userprop != null){
@@ -122,4 +143,33 @@ $(function() {
                 });
             }
         });
+
+    /*获取所有系统可供下载的软件*/
+    $.get("workassist/getsoftwear",
+        function (data,status){
+            let data1 = data.softwear.filter(function (item){
+                return item.category_name == "操作系统";
+            });
+            let data2 = data.softwear.filter(function (item){
+                return item.category_name == "办公软件";
+            });
+            let data3 = data.softwear.filter(function (item){
+                return item.category_name == "浏览器";
+            });
+            let data4 = data.softwear.filter(function (item){
+                return item.category_name == "安全软件";
+            });
+            let data5 = data.softwear.filter(function (item){
+                return item.category_name == "其他软件";
+            });
+
+            let softinfo = '<table class="table table-bordered">'
+            softinfo += generateSoftInfo("操作系统",data1);
+            softinfo += generateSoftInfo("办公软件",data2);
+            softinfo += generateSoftInfo("浏览器",data3);
+            softinfo += generateSoftInfo("安全软件",data4);
+            softinfo += generateSoftInfo("其他软件",data5);
+            softinfo += '</table>'
+            $('#software div').html(softinfo);
+    });
 });

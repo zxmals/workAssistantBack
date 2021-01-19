@@ -3,7 +3,7 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.xz.cmcc.dao.userPropertyDao">
-	<select id="queryUserPropertyByMacAddress" resultType="com.xz.cmcc.entity.userProperty">
+	<select id="queryUserPropertyByMacAddress" resultType="com.xz.cmcc.entity.userProperty" flushCache="true" useCache="false">
 		select user_id,user_name,product_no,department
 		,position,mac_addresss,ip_addresss,property_id
 		,prop_startdate,prop_enddate 
@@ -11,7 +11,7 @@
 		where mac_addresss = #{macAddress}
 	</select>
 	
-	<select id="queryUserPropertyByIpAddress" resultType="com.xz.cmcc.entity.userProperty">
+	<select id="queryUserPropertyByIpAddress" resultType="com.xz.cmcc.entity.userProperty" flushCache="true" useCache="false">
 		select user_id,user_name,product_no,department,position,mac_addresss,ip_addresss,property_id,prop_startdate,prop_enddate 
 		from userproperty 
 		where ip_addresss = #{ipAddress}
