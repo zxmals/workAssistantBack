@@ -1,0 +1,22 @@
+user_id	varchar(20)	NO	pri
+,user_name	varchar(200)	NO	
+,product_no	varchar(20)	YES	
+,department	varchar(200)	YES	
+,position	varchar(200)	YES	
+,mac_addresss	varchar(40)	YES	
+,ip_addresss	varchar(40)	YES	
+,property_id	varchar(100)	YES	
+,prop_startdate	datetime	YES	
+,prop_enddate	datetime	YES	
+
+
+
+
+create table softwearinfo(
+softwear_id int auto_increment primary key not null,
+softwear_name1 varchar(150) not null,
+softwear_name2 varchar(150) not null,
+category_name varchar(150) not null,
+store_path varchar(200) not null,
+create_date datetime
+)ENGINE=INNODB default charset=utf8 auto_increment=1;
