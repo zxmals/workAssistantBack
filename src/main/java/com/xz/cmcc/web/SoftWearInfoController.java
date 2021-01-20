@@ -36,9 +36,9 @@ public class SoftWearInfoController {
 	}
 
 	@RequestMapping(value="/download",method=RequestMethod.GET)
-    public String downLoad(HttpServletResponse response,int softwear_id) throws UnsupportedEncodingException {
-	        String filename= softInfoService.getSoftWearInfoById(softwear_id).getSoftwear_name2();
-	        String filePath = softInfoService.getSoftWearInfoById(softwear_id).getStore_path();
+    public String downLoad(HttpServletResponse response,String softwear_id) throws UnsupportedEncodingException {
+	        String filename= softInfoService.getSoftWearInfoById(Integer.parseInt(softwear_id)).getSoftwear_name2();
+	        String filePath = softInfoService.getSoftWearInfoById(Integer.parseInt(softwear_id)).getStore_path();
 	        File file = new File(filePath + "/" + filename);
 	        if(file.exists()){ //判断文件父目录是否存在
 	            response.setContentType("application/vnd.ms-excel;charset=UTF-8");

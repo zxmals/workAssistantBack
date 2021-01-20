@@ -2,18 +2,7 @@
 
 /*全局控制*/
 $(document).ready(function(){
-    /*页面切换*/
-    $("li[role='presentation']").click(function (){
-        $(this).addClass('active').siblings().removeClass('active');
-        $('#'+$(this).attr("title")).removeClass("hidden").siblings().addClass('hidden');
-    })
 
-    $('#software table table a').click(function (){
-        $.get("workassist/download?softwear_id="+this.attr("id")
-            ,function (data,status){
-            alert(status,data)
-            });
-    });
 });
 
 
@@ -102,7 +91,7 @@ function generateSoftInfo(title,data){
     for(let i in data){
         info += '<tr>' +
             '<td>' + data[i].softwear_name1 + '</td>'
-        info += '<td><p class="text-primary" style="width: auto!important;"><a id="'+data[i].softwear_id+'" href="#"><span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span> 点击下载</a></p></td>' +
+        info += '<td><p class="text-primary" style="width: auto!important;"><a id="'+data[i].softwear_id+'" class="download" href=workassist/download?softwear_id='+parseInt(data[i].softwear_id)+'><span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span> 点击下载</a></p></td>' +
             '</tr>';
     }
     info += '</table></td></tr>';
@@ -179,4 +168,24 @@ $(function() {
             softinfo += '</table>'
             $('#software div').html(softinfo);
     });
+
+    /*页面切换*/
+    $("li[role='presentation']").click(function (){
+        $(this).addClass('active').siblings().removeClass('active');
+        $('#'+$(this).attr("title")).removeClass("hidden").siblings().addClass('hidden');
+    });
+
+    /*软件下载触发事件处理*/
+    $('#software div').ready(function(){
+        $('.download').click(function (){
+/*            $.get("workassist/download?softwear_id="+this.id
+            		,function(data,status){
+                    alert(status,data)
+                });*/
+        });
+    });
+
 });
+
+
+
