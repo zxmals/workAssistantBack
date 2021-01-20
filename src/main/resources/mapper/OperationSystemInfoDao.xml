@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+        
+<mapper namespace="com.xz.cmcc.dao.OperationSystemInfoDao">
+	<select id="queryOperationSystemInfoById" resultType="com.xz.cmcc.entity.OperationSystemInfo" flushCache="true" useCache="false">
+		SELECT operation_system_id,operation_system_name 
+		FROM operationsysteminfo
+		where operation_system_id = #{operation_system_id}
+	</select>
+	
+</mapper>         

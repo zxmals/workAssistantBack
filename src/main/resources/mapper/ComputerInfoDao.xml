@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xz.cmcc.dao.ComputerInfoDao">
+
+	<select id="queryComputerInfo" resultMap="computermap" flushCache="true" useCache="false">
+		select computer_id,computer_name
+		,b.pc_brand_id
+		,b.pc_brand_name
+		,c.pc_model_id
+		,c.pc_model_name
+		from computerinfo a 
+		left join computerbrandinfo b on a.pc_brand_id = b.pc_brand_id
+		left join computermodelinfo c on a.pc_model_id = c.pc_model_id
+	</select>
+
+	<select id="queryComputerInfoById" resultMap="computermap" flushCache="true" useCache="false">
+		select computer_id,computer_name
+		,b.pc_brand_id
+		,b.pc_brand_name
+		,c.pc_model_id
+		,c.pc_model_name
+		from computerinfo a 
+		left join computerbrandinfo b on a.pc_brand_id = b.pc_brand_id
+		left join computermodelinfo c on a.pc_model_id = c.pc_model_id
+		where computer_id = #{computer_id}
+	</select>	
+
+	<select id="queryComputerInfoByBrandAndModel" resultMap="computermap" flushCache="true" useCache="false">
+		select computer_id,computer_name
+		,b.pc_brand_id
+		,b.pc_brand_name
+		,c.pc_model_id
+		,c.pc_model_name
+		from computerinfo a 
+		left join computerbrandinfo b on a.pc_brand_id = b.pc_brand_id
+		left join computermodelinfo c on a.pc_model_id = c.pc_model_id
+		where a.pc_brand_id = #{pc_brand_id} and a.pc_model_id = #{pc_model_id}
+	</select>	
+
+	<resultMap type="com.xz.cmcc.entity.ComputerInfo" id="computermap">
+		<id column="computer_id" property="computer_id"/>
+		<result column="computer_name" property="computer_name"/>
+		<association property="computerbrand" column="pc_brand_id" javaType="com.xz.cmcc.entity.ComputerBrandInfo"  select="com.xz.cmcc.dao.ComputerBrandInfoDao.queryComputerBrandInfoById"/>
+		<association property="computermodel" column="pc_model_id" javaType="com.xz.cmcc.entity.ComputerModelInfo"  select="com.xz.cmcc.dao.ComputerModelInfoDao.queryComputerModelInfoById"/>
+	</resultMap>		
+	
+</mapper>
