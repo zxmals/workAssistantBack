@@ -4,7 +4,7 @@ import java.util.Date;
 
 public class DriverInfo {
 
-	private Integer dirver_id;
+	private Integer driver_id;
 
 	private String driver_name1;
 
@@ -18,12 +18,12 @@ public class DriverInfo {
 
 	private OperationSystemInfo osinfo;
 
-	public Integer getDirver_id() {
-		return dirver_id;
+	public Integer getDriver_id() {
+		return driver_id;
 	}
 
-	public void setDirver_id(Integer dirver_id) {
-		this.dirver_id = dirver_id;
+	public void setDriver_id(Integer driver_id) {
+		this.driver_id = driver_id;
 	}
 
 	public String getDriver_name1() {

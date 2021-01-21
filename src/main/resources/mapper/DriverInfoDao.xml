@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xz.cmcc.dao.DriverInfoDao">
+	<select id="queryDriverInfoByComputerAndOs" resultMap="driverinfomap" flushCache="true" useCache="false">
+		SELECT driver_id,driver_name1,driver_name2,store_path,create_date
+		,b.computer_id,b.computer_name,b.pc_brand_id,b.pc_brand_name,b.pc_model_id,b.pc_model_name
+		,c.operation_system_id,c.operation_system_name
+		FROM driverinfo a left join (
+			select computer_id,computer_name
+			,b.pc_brand_id,b.pc_brand_name
+			,c.pc_model_id,c.pc_model_name
+			from computerinfo a 
+			left join computerbrandinfo b on a.pc_brand_id = b.pc_brand_id
+			left join computermodelinfo c on a.pc_model_id = c.pc_model_id
+		) b on a.computer_id = b.computer_id
+		left join operationsysteminfo c on a.operation_system_id = c.operation_system_id
+		where a.computer_id=#{computer_id} and a.operation_system_id=#{operation_system_id}
+	</select>
+	
+	<select id="queryDriverInfoById" resultMap="driverinfomap" flushCache="true" useCache="false">
+		SELECT driver_id,driver_name1,driver_name2,store_path,create_date
+		,b.computer_id,b.computer_name,b.pc_brand_id,b.pc_brand_name,b.pc_model_id,b.pc_model_name
+		,c.operation_system_id,c.operation_system_name
+		FROM driverinfo a left join (
+			select computer_id,computer_name
+			,b.pc_brand_id,b.pc_brand_name
+			,c.pc_model_id,c.pc_model_name
+			from computerinfo a 
+			left join computerbrandinfo b on a.pc_brand_id = b.pc_brand_id
+			left join computermodelinfo c on a.pc_model_id = c.pc_model_id
+		) b on a.computer_id = b.computer_id
+		left join operationsysteminfo c on a.operation_system_id = c.operation_system_id
+		where a.driver_id=#{driver_id}
+	</select>
+	
+	<resultMap type="com.xz.cmcc.entity.DriverInfo" id="driverinfomap">
+		<id column="driver_id" property="driver_id" />
+		<result column="driver_name1" property="driver_name1" />
+		<result column="driver_name2" property="driver_name2" />
+		<result column="store_path" property="store_path" />
+		<result column="create_date" property="create_date" />
+		<association property="computerinfo" column="computer_id" javaType="com.xz.cmcc.entity.ComputerInfo"  select="com.xz.cmcc.dao.ComputerInfoDao.queryComputerInfoById"/>	
+		<association property="osinfo" column="operation_system_id" javaType="com.xz.cmcc.entity.OperationSystemInfo"  select="com.xz.cmcc.dao.OperationSystemInfoDao.queryOperationSystemInfoById"/>
+	</resultMap>
+</mapper>        
