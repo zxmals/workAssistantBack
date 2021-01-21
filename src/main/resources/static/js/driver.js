@@ -1,11 +1,15 @@
 
-
-/*全局控制*/
-$(document).ready(function(){
-
-});
-
-
+let computermodelinfo = null;
+$(function (){
+    computermodelinfo = p = $('#hardware .col-md-4 select').find('option').clone();
+    $('#hardware .col-md-3 select').eq(0).change(function (){
+        let i =$('#hardware .col-md-3 select').eq(0).find('option:selected').attr('id');
+        $('#hardware .col-md-4 select').find('option').remove();
+        $('#hardware .col-md-4 select').append(computermodelinfo);
+        $('#hardware .col-md-4 select').find('option[customs!='+i+']').remove();
+        $('#hardware .col-md-4 select').selectpicker('refresh');
+    });
+})
 
 /*设备信息页*/
 let locator = new ActiveXObject ("WbemScripting.SWbemLocator");
