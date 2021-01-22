@@ -8,4 +8,9 @@
 		from computerbrandinfo 
 		where pc_brand_id = #{pc_brand_id}
 	</select>
+	
+	<select id="queryComputerBrandInfo" resultType="com.xz.cmcc.entity.ComputerBrandInfo" flushCache="true" useCache="false">
+		select pc_brand_id,pc_brand_name 
+		from computerbrandinfo 
+	</select>	
 </mapper>

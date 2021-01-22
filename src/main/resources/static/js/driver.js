@@ -1,14 +1,7 @@
 
 let computermodelinfo = null;
 $(function (){
-    computermodelinfo = p = $('#hardware .col-md-4 select').find('option').clone();
-    $('#hardware .col-md-3 select').eq(0).change(function (){
-        let i =$('#hardware .col-md-3 select').eq(0).find('option:selected').attr('id');
-        $('#hardware .col-md-4 select').find('option').remove();
-        $('#hardware .col-md-4 select').append(computermodelinfo);
-        $('#hardware .col-md-4 select').find('option[customs!='+i+']').remove();
-        $('#hardware .col-md-4 select').selectpicker('refresh');
-    });
+
 })
 
 /*设备信息页*/
@@ -180,12 +173,60 @@ $(function() {
     });
 
     /*软件下载触发事件处理*/
-    $('#software div').ready(function(){
+/*    $('#software div').ready(function(){
         $('.download').click(function (){
-/*            $.get("workassist/download?softwear_id="+this.id
+            $.get("workassist/download?softwear_id="+this.id
             		,function(data,status){
                     alert(status,data)
-                });*/
+                });
+        });
+    });*/
+
+    $.get("/workassist/getcomputerbrand"
+        ,function (data,status){
+            let info = "";
+            brandinfo = data.brand
+            for(let e in brandinfo){
+                info += '<option id="'+brandinfo[e].pc_brand_id+'">'+brandinfo[e].pc_brand_name+'</option>'
+            }
+            $('#hardware .col-md-3 select').eq(0).find('option').remove();
+            $('#hardware .col-md-3 select').eq(0).append(info);
+            $('#hardware .col-md-3 select').selectpicker('refresh');
+        });
+
+    $.get("/workassist/getosinfo"
+        ,function (data,status){
+            let info = "";
+            osinform = data.osinfo
+            for(let e in osinform){
+                info += '<option customs="'+osinform[e].operation_system_id+'">'+osinform[e].operation_system_name+'</option>'
+            }
+            $('#hardware .col-md-3 select').eq(1).find('option').remove();
+            $('#hardware .col-md-3 select').eq(1).append(info);
+            $('#hardware .col-md-3 select').selectpicker('refresh');
+        });
+
+    $.get("/workassist/getcomputerinfo"
+        ,function (data,status){
+            let info = "";
+            compinfo = data.computerinfo
+            for(let e in compinfo){
+                info += '<option compid="'+compinfo[e].computer_id+'" customs="'+compinfo[e].computerbrand.pc_brand_id+'">'+compinfo[e].computermodel.pc_model_name+'</option>'
+            }
+            $('#hardware .col-md-4 select').eq(0).find('option').remove();
+            $('#hardware .col-md-4 select').eq(0).append(info);
+            $('#hardware .col-md-4 select').selectpicker('refresh');
+        });
+
+    /*驱动下载界面，下拉框级联查询*/
+    $('#hardware select').ready(function (){
+        computermodelinfo = p = $('#hardware .col-md-4 select').find('option').clone();
+        $('#hardware .col-md-3 select').eq(0).change(function (){
+            let i =$('#hardware .col-md-3 select').eq(0).find('option:selected').attr('id');
+            $('#hardware .col-md-4 select').find('option').remove();
+            $('#hardware .col-md-4 select').append(computermodelinfo);
+            $('#hardware .col-md-4 select').find('option[customs!='+i+']').remove();
+            $('#hardware .col-md-4 select').selectpicker('refresh');
         });
     });
 

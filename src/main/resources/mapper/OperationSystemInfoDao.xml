@@ -10,4 +10,8 @@
 		where operation_system_id = #{operation_system_id}
 	</select>
 	
+	<select id="queryOperationSystemInfo" resultType="com.xz.cmcc.entity.OperationSystemInfo" flushCache="true" useCache="false">
+		SELECT operation_system_id,operation_system_name 
+		FROM operationsysteminfo
+	</select>	
 </mapper>         
