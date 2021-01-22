@@ -9,12 +9,15 @@
 <link rel="stylesheet" type="text/css" href="css/custom.css" />
 <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />
 <link rel="stylesheet" type="text/css" href="css/bootstrap-select.min.css" />
+<link rel="stylesheet" type="text/css" href="css/sweetalert.css" />
 <!-- HTML5 shim 和 Respond.js 是为了让 IE8 支持 HTML5 元素和媒体查询（media queries）功能 -->
 <!-- 警告：通过 file:// 协议（就是直接将 html 页面拖拽到浏览器中）访问页面时 Respond.js 不起作用 -->
 <!--[if lt IE 9]
 <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
 ![endif]-->
+<script src="js/jquery-3.5.1.min.js"></script>
+<script src="js/sweetalert-dev.js"></script>
 <body>
 <div class="container">
     <div class="row">
@@ -84,37 +87,24 @@
                     <div class="col-md-3">
                         电脑品牌：
                         <select id="select1" class="selectpicker" data-width="65%" data-live-search="true" data-style="btn-info" title="品牌">
-                            <option id="1">Hot Dog1</option>
-                            <option id="2">Hot Dog2</option>
-                            <option id="3">Hot Dog3</option>
                         </select>
                     </div>
 
                     <div class="col-md-4">
                         电脑型号：
-                        <select class="selectpicker" data-width="65%" data-live-search="true" data-style="btn-info" title="型号">
-                            <option customs="1">result1</option>
-                            <option customs="1">result1</option>
-                            <option customs="1">result1</option>
-                            <option customs="2">result2</option>
-                            <option customs="2">result2</option>
-                            <option customs="2">result2</option>
-                            <option customs="3">result3</option>
-                            <option customs="3">result3</option>
-                            <option customs="3">result3</option>
+                        <select class="selectpicker" data-width="65%" data-live-search="true" data-style="btn-info" title="型号">                            
                         </select>
                     </div>
 
                     <div class="col-md-3">
                         操作系统：
                         <select class="selectpicker" data-width="65%" data-live-search="true" data-style="btn-info" title="系统">
-                            <option id="1">Hot Dog</option>
                         </select>
                     </div>
 
                     <div class="col-md-2">
                         <button type="button" class="btn btn-success">
-                            <span class="glyphicon glyphicon-search" aria-hidden="true">&nbsp点击查询</span>
+                            <span class="glyphicon glyphicon-search" aria-hidden="true">&nbsp;点击查询</span>
                         </button>
                     </div>
                 </div>
@@ -132,7 +122,9 @@
                             <tr>
                                 <td style="text-align: center">1</td>
                                 <td style="text-align: center">驱动1</td>
-                                <td style="text-align: center">点击下载</td>
+                                <td style="text-align: center">
+                                    <p class="text-primary" style="width: auto !important;"><a class="download" id="1" href="#"><span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span> 点击下载</a></p>
+                                </td>
                             </tr>
                             <tr>
                                 <td style="text-align: center">1</td>
@@ -185,10 +177,11 @@
         </div>
     </div>
 </div>
-</body>
+
 <!-- 加载 Bootstrap 的所有 JavaScript 插件。你也可以根据需要只加载单个插件。 -->
-<script src="js/jquery-3.5.1.min.js"></script>
+
 <script src="js/bootstrap.min.js"></script>
 <script src="js/driver.js"></script>
 <script src="js/bootstrap-select.min.js"></script>
+</body>
 </html>

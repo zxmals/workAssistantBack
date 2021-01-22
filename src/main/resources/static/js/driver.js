@@ -1,8 +1,6 @@
 
+/*缓存驱动下拉框数据-电脑型号*/
 let computermodelinfo = null;
-$(function (){
-
-})
 
 /*设备信息页*/
 let locator = new ActiveXObject ("WbemScripting.SWbemLocator");
@@ -71,7 +69,6 @@ function getDeviceInfo(){
     info += cpuInfo();
     info += mainBoard();
     info += ipInfo();
-
     return info;
 
 }
@@ -88,7 +85,7 @@ function generateSoftInfo(title,data){
     for(let i in data){
         info += '<tr>' +
             '<td>' + data[i].softwear_name1 + '</td>'
-        info += '<td><p class="text-primary" style="width: auto!important;"><a id="'+data[i].softwear_id+'" class="download" href=workassist/download?softwear_id='+parseInt(data[i].softwear_id)+'><span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span> 点击下载</a></p></td>' +
+        info += '<td><p class="text-primary" style="width: auto!important;"><a id="'+data[i].softwear_id+'" class="download" href=workassist/download?softwear_id='+parseInt(data[i].softwear_id)+'><span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span>&nbsp;点击下载</a></p></td>' +
             '</tr>';
     }
     info += '</table></td></tr>';
@@ -182,6 +179,7 @@ $(function() {
         });
     });*/
 
+/*初始化驱动下拉框数据-电脑品牌*/
     $.get("/workassist/getcomputerbrand"
         ,function (data,status){
             let info = "";
@@ -193,7 +191,7 @@ $(function() {
             $('#hardware .col-md-3 select').eq(0).append(info);
             $('#hardware .col-md-3 select').selectpicker('refresh');
         });
-
+    /*初始化驱动下拉框数据-操作系统*/
     $.get("/workassist/getosinfo"
         ,function (data,status){
             let info = "";
@@ -205,7 +203,7 @@ $(function() {
             $('#hardware .col-md-3 select').eq(1).append(info);
             $('#hardware .col-md-3 select').selectpicker('refresh');
         });
-
+    /*初始化驱动下拉框数据-电脑型号*/
     $.get("/workassist/getcomputerinfo"
         ,function (data,status){
             let info = "";
@@ -216,11 +214,11 @@ $(function() {
             $('#hardware .col-md-4 select').eq(0).find('option').remove();
             $('#hardware .col-md-4 select').eq(0).append(info);
             $('#hardware .col-md-4 select').selectpicker('refresh');
+            computermodelinfo = info;
         });
 
     /*驱动下载界面，下拉框级联查询*/
     $('#hardware select').ready(function (){
-        computermodelinfo = p = $('#hardware .col-md-4 select').find('option').clone();
         $('#hardware .col-md-3 select').eq(0).change(function (){
             let i =$('#hardware .col-md-3 select').eq(0).find('option:selected').attr('id');
             $('#hardware .col-md-4 select').find('option').remove();
@@ -228,6 +226,40 @@ $(function() {
             $('#hardware .col-md-4 select').find('option[customs!='+i+']').remove();
             $('#hardware .col-md-4 select').selectpicker('refresh');
         });
+    });
+
+    $('#hardware .col-md-2 button').click(function (){
+
+        if($('#hardware .col-md-4 select').selectpicker('val')!=""&&$('#hardware .col-md-3 select').eq(0).selectpicker('val')!=""&&$('#hardware .col-md-3 select').eq(1).selectpicker('val')!=""){
+            computer_id = $('#hardware .col-md-4 select').eq(0).find('option:selected').attr("compid");
+            os_id = $('#hardware .col-md-3 select').eq(1).find('option:selected').attr("customs");
+            $.get("workassist/getdriverinfobycmandos?computer_id="+computer_id+"&os_id="+os_id
+                ,function (data,status){
+                    $('#hardware .panel-body table tbody').find('tr').remove();
+                    driverinfoli = data.dirverinfo;
+                    let infodriver = "";
+                    let i = 1
+                    for(let e in driverinfoli){
+                        infodriver += '<tr><td style="text-align: center">'+i+'</td>';
+                        infodriver += '<td style="text-align: center">'+driverinfoli[e].driver_name1+'</td>'
+                        infodriver += '<td style="text-align: center">';
+                        infodriver += '<p class="text-primary" style="width: auto !important;">';
+                        infodriver += '<a class="download" id="'+driverinfoli[e].driver_id+'" href="workassist/driverdownload?driver_id='+driverinfoli[e].driver_id+'" ><span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span> 点击下载</a></p>';
+                        infodriver += '</td></tr>';
+                        i += 1;
+                    }
+                    $('#hardware .panel-body table tbody').append(infodriver);
+            })
+        }else{
+            let a = $('#hardware .col-md-3 select').eq(0).selectpicker('val')==''?"电脑品牌":'';
+            let b = $('#hardware .col-md-4 select').eq(0).selectpicker('val')==''?"电脑型号":'';
+            let c = $('#hardware .col-md-3 select').eq(1).selectpicker('val')==''?"操作系统":'';
+            let info = "请选择："+a+(a==""?"":"、");
+            info += b+(b==""?"":"、");
+            info = c==""?info.substring(0,info.length-1):info;
+            info += c+"信息！";
+            swal("",info,"warning")
+        }
     });
 
 });
