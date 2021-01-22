@@ -17,7 +17,10 @@
 }
 
 body {
-    background-image: url(../img/xzyd.jpg);
+    background-image: url(../img/xzyd1.png);
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    background-position: center;
 }
 
 .row-vertical-center {
