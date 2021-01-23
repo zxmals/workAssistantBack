@@ -28,3 +28,11 @@ body {
     text-align: center;
     width: 40%;
 }
+
+.col-md-3{
+    width: 24.2%!important;
+}
+
+#cmccapp .col-md-3 table {
+    /*background-color: aliceblue;*/
+}

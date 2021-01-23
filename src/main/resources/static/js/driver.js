@@ -2,6 +2,9 @@
 /*缓存驱动下拉框数据-电脑型号*/
 let computermodelinfo = null;
 
+/*缓存单个移动APP信息*/
+let appinfo = null;
+
 /*设备信息页*/
 let locator = new ActiveXObject ("WbemScripting.SWbemLocator");
 let service = locator.ConnectServer(".");
@@ -283,6 +286,20 @@ $(function() {
         }
     });
 
+    $('#cmccapp .col-md-3 tabl').ready(function (){
+
+        $("#cmccapp .col-md-3 table").bind("mouseenter",function (){
+            url = $(this).find('tr td a').attr('href');
+            $(this).find('tr td div').addClass('hidden');
+            $(this).find('tr td').qrcode({width: 130,height: 130,text: toUtf8(url)});
+
+        })
+
+        $("#cmccapp .col-md-3 table").bind('mouseleave',function (){
+            $(this).find('tr td div').removeClass('hidden');
+            $(this).find('tr td canvas').remove();
+        });
+    });
 });
 
 

@@ -21,151 +21,229 @@
 <script src="js/jquery.qrcode.min.js"></script>
 <!--$('#qrcode').qrcode({width: 64,height: 64,text: "size doesn't matter"});-->
 <body>
-<div class="container">
-    <div class="row nav navbar-fixed-top" style="background-color: aliceblue">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12 text-center">
-                    <h1>
-                        <div style="float: left"><img src="img/cmcc1.png"></div>
-                        <div><em>欢迎进入设备助理系统！</em></div>
-                    </h1>
-                </div>
-            </div>
-            <div class="row hides">
-                <nav class="navbar">
-                    <div class="container" >
-                        <ul class="nav nav-pills nav-justified">
-                            <li role="presentation" title="device" class="active body-down borderControl1"><a href="#">设备信息</a></li>
-                            <li role="presentation" title="hardware" class="body-down"><a href="#">驱动服务</a></li>
-                            <li role="presentation" title="software" class="body-down"><a href="#">软件服务</a></li>
-                            <li role="presentation" title="cmccapp" class="body-down"><a href="#">移动APP</a></li>
-                            <li role="presentation" title="abouts" class="body-down borderControl2"><a href="#">关于我们</a></li>
-                        </ul>
+    <div class="container">
+        <div class="row nav navbar-fixed-top" style="background-color: aliceblue">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12 text-center">
+                        <h1>
+                            <div style="float: left"><img src="img/cmcc1.png"></div>
+                            <div><em>欢迎进入设备助理系统！</em></div>
+                        </h1>
                     </div>
-                </nav>
+                </div>
+                <div class="row hides">
+                    <nav class="navbar">
+                        <div class="container" >
+                            <ul class="nav nav-pills nav-justified">
+                                <li role="presentation" title="device" class="active body-down borderControl1"><a href="#">设备信息</a></li>
+                                <li role="presentation" title="hardware" class="body-down"><a href="#">驱动服务</a></li>
+                                <li role="presentation" title="software" class="body-down"><a href="#">软件服务</a></li>
+                                <li role="presentation" title="cmccapp" class="body-down"><a href="#">移动APP</a></li>
+                                <li role="presentation" title="abouts" class="body-down borderControl2"><a href="#">关于我们</a></li>
+                            </ul>
+                        </div>
+                    </nav>
+                </div>
             </div>
         </div>
-    </div>
 
 
-    <div calss="row" style="padding-top: 150px">
-        <!--设备信息-->
-        <div class="container hides" id="device">
-            <div class="col-md-6" id="deviceuser">
-                <div class="panel panel-default panel-primary">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">
-                            <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
-                            维保信息
-                        </h3>
-                    </div>
-                    <div class="panel-body">
-                        <ul class="list-group">
-                            数据加载中
-                            <span class="glyphicon glyphicon-time" aria-hidden="true"></span>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6" id="deviceuse">
-                <div class="panel panel-default panel-success">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">
-                            <span class="glyphicon glyphicon-hdd" aria-hidden="true"></span>
-                            设备信息
-                        </h3>
-                    </div>
-                    <div class="panel-body">
-                        <ul class="list-group" >
-                            <p class="text-warning">
+        <div calss="row" style="padding-top: 150px">
+            <!--设备信息-->
+            <div class="container hides" id="device">
+                <div class="col-md-6" id="deviceuser">
+                    <div class="panel panel-default panel-primary">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">
+                                <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+                                维保信息
+                            </h3>
+                        </div>
+                        <div class="panel-body">
+                            <ul class="list-group">
                                 数据加载中
                                 <span class="glyphicon glyphicon-time" aria-hidden="true"></span>
-                                ......
-                            </p>
-                        </ul>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6" id="deviceuse">
+                    <div class="panel panel-default panel-success">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">
+                                <span class="glyphicon glyphicon-hdd" aria-hidden="true"></span>
+                                设备信息
+                            </h3>
+                        </div>
+                        <div class="panel-body">
+                            <ul class="list-group" >
+                                <p class="text-warning">
+                                    数据加载中
+                                    <span class="glyphicon glyphicon-time" aria-hidden="true"></span>
+                                    ......
+                                </p>
+                            </ul>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
 
-<!--驱动服务-->
-        <div class="container hides hidden" id="hardware">
-            <div class="panel panel-default">
-                <div class="container-fluid panel-heading">
-                    <div class="col-md-3">
-                        电脑品牌：
-                        <select id="select1" class="selectpicker" data-width="65%" data-live-search="true" data-style="btn-info" title="品牌">
-                        </select>
+    <!--驱动服务-->
+            <div class="container hides hidden" id="hardware">
+                <div class="panel panel-default">
+                    <div class="container-fluid panel-heading">
+                        <div class="col-md-3">
+                            电脑品牌：
+                            <select id="select1" class="selectpicker" data-width="65%" data-live-search="true" data-style="btn-info" title="品牌">
+                            </select>
+                        </div>
+
+                        <div class="col-md-4">
+                            电脑型号：
+                            <select class="selectpicker" data-width="65%" data-live-search="true" data-style="btn-info" title="型号">
+                            </select>
+                        </div>
+
+                        <div class="col-md-3">
+                            操作系统：
+                            <select class="selectpicker" data-width="65%" data-live-search="true" data-style="btn-info" title="系统">
+                            </select>
+                        </div>
+
+                        <div class="col-md-2">
+                            <button type="button" class="btn btn-success">
+                                <span class="glyphicon glyphicon-search" aria-hidden="true">&nbsp;点击查询</span>
+                            </button>
+                        </div>
                     </div>
 
-                    <div class="col-md-4">
-                        电脑型号：
-                        <select class="selectpicker" data-width="65%" data-live-search="true" data-style="btn-info" title="型号">                            
-                        </select>
-                    </div>
-
-                    <div class="col-md-3">
-                        操作系统：
-                        <select class="selectpicker" data-width="65%" data-live-search="true" data-style="btn-info" title="系统">
-                        </select>
-                    </div>
-
-                    <div class="col-md-2">
-                        <button type="button" class="btn btn-success">
-                            <span class="glyphicon glyphicon-search" aria-hidden="true">&nbsp;点击查询</span>
-                        </button>
+                    <div class="container-fluid panel-body">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th style="text-align: center">#</th>
+                                    <th style="text-align: center">驱动名称</th>
+                                    <th style="text-align: center">下载链接</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
+            </div>
 
-                <div class="container-fluid panel-body">
-                    <table class="table table-bordered">
-                        <thead>
-                            <tr>
-                                <th style="text-align: center">#</th>
-                                <th style="text-align: center">驱动名称</th>
-                                <th style="text-align: center">下载链接</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                        </tbody>
-                    </table>
+    <!--软件服务-->
+            <div class="container hides hidden" id="software">
+                <div class="container-fluid">
                 </div>
             </div>
-        </div>
 
-<!--软件服务-->
-        <div class="container hides hidden" id="software">
-            <div class="container-fluid">
-            </div>
-        </div>
+    <!--移动APP-->
+            <div class="container hides hidden" id="cmccapp">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">移动App</h3>
+                    </div>
+                    <div class="container" style="padding-top: 15px">
+                        <div class="row">
 
-<!--移动APP-->
-        <div class="container hides hidden" id="cmccapp">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h3 class="panel-title">Panel title</h3>
+                            <div class="col-md-3">
+                                <table class="table table-bordered" style="height: 165px">
+                                    <tbody>
+                                        <tr>
+                                            <td class="row-vertical-center">
+                                                <div>
+                                                    <img src="img/中移党建云.jpg" height="80px"><br>
+                                                    <h5 class="text-primary"><a href="https://www.w3school.com.cn/jquery/attributes_addclass.asp">中国移动党建云</a></h5>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <div class="col-md-3">
+                                <table class="table table-bordered" style="height: 165px">
+                                    <tbody>
+                                    <tr>
+                                        <td class="row-vertical-center">
+                                            <div>
+                                                <img src="img/中移党建云.jpg" height="80px"><br>
+                                                <h5 class="text-primary"><a href="https://www.w3school.com.cn/jquery/attributes_addclass.asp">中国移动党建云</a></h5>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <div class="col-md-3">
+                                <table class="table table-bordered" style="height: 165px">
+                                    <tbody>
+                                    <tr>
+                                        <td class="row-vertical-center">
+                                            <div>
+                                                <img src="img/中移党建云.jpg" height="80px"><br>
+                                                <h5 class="text-primary"><a href="https://www.w3school.com.cn/jquery/attributes_addclass.asp">中国移动党建云</a></h5>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <div class="col-md-3">
+                                <table class="table table-bordered" style="height: 165px">
+                                    <tbody>
+                                    <tr>
+                                        <td class="row-vertical-center">
+                                            <div>
+                                                <img src="img/中移党建云.jpg" height="80px"><br>
+                                                <h5 class="text-primary"><a href="https://www.w3school.com.cn/jquery/attributes_addclass.asp">中国移动党建云</a></h5>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <div class="col-md-3">
+                                <table class="table table-bordered" style="height: 165px">
+                                    <tbody>
+                                    <tr>
+                                        <td class="row-vertical-center">
+                                            <div>
+                                                <img src="img/中移党建云.jpg" height="80px"><br>
+                                                <h5 class="text-primary"><a href="https://www.w3school.com.cn/jquery/attributes_addclass.asp">中国移动党建云</a></h5>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                        </div>
+
+                    </div>
                 </div>
-                <div class="panel-body">
-                    Panel content
+            </div>
+
+    <!--关于我们-->
+            <div class="container hides hidden" id="abouts">
+                <div class="jumbotron">
+                    <h1>Hello, world!</h1>
+                    <p>This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.</p>
                 </div>
-            </div>
-        </div>
 
-<!--关于我们-->
-        <div class="container hides hidden" id="abouts">
-            <div class="jumbotron">
-                <h1>Hello, world!</h1>
-                <p>This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.</p>
-            </div>
-
-            <div class="jumbotron">
-                <h1>Hello, world!</h1>
-                <p>This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.</p>
+                <div class="jumbotron">
+                    <h1>Hello, world!</h1>
+                    <p>This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.</p>
+                </div>
             </div>
         </div>
     </div>
-</div>
 <!-- 加载 Bootstrap 的所有 JavaScript 插件。你也可以根据需要只加载单个插件。 -->
 
 <script src="js/bootstrap.min.js"></script>
