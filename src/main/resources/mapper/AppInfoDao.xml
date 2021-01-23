@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xz.cmcc.dao.AppInfoDao">
+
+	<resultMap type="com.xz.cmcc.entity.AppInfo" id="appinfo">
+		<id column="app_id" property="app_id" />
+		<result column="app_name" property="app_name" />
+		<result column="app_href" property="app_href" />
+		<result column="img_store_path" property="img_store_path" />
+		<association property="apptypeInfo" column="app_type_id" javaType="com.xz.cmcc.entity.AppTypeInfo" select="com.xz.cmcc.dao.AppTypeInfoDao.queryAppTypeInfoById" />
+	</resultMap>
+	
+	<select id="queryAppInfo" resultMap="appinfo" flushCache="true" useCache="false" >
+		SELECT a.app_id,a.app_name,a.app_href,a.img_store_path
+		,b.app_type_id,b.app_type_name
+		FROM appinfo a 
+		left join apptypeinfo b on a.app_type_id = b.app_type_id
+	</select>
+</mapper>

@@ -286,6 +286,21 @@ $(function() {
         }
     });
 
+    $.get("workassist/getappinfo"
+        ,function (data,status){
+        appinfos = data.appinfo
+            let info = ""
+            for(let e in appinfos){
+                info += '<div class="col-md-3"><table class="table table-bordered" style="height: 165px"><tbody><tr><td class="row-vertical-center"><div>'
+                info += '<img src="'+appinfos[e].img_store_path+'" height="80px"><br>'
+                info += '<h5 class="text-primary"><a href="'+appinfos[e].app_href+'">'+appinfos[e].app_name+'</a></h5>'
+                info += '</div></td></tr></tbody></table></div>'
+            }
+            $('#cmccapp .panel .container .row div').remove()
+            $('#cmccapp .panel .container .row').append(info);
+    });
+
+
     $('#cmccapp .col-md-3 tabl').ready(function (){
 
         $("#cmccapp .col-md-3 table").bind("mouseenter",function (){
@@ -300,6 +315,7 @@ $(function() {
             $(this).find('tr td canvas').remove();
         });
     });
+
 });
 
 
