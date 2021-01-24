@@ -12,32 +12,35 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import com.xz.cmcc.entity.SoftWearInfo;
 
+
 @RunWith(SpringRunner.class)
 @SpringBootTest
 class SoftWearInfoDaoTest {
 
 	@Autowired
-	private SoftWearInfoDao softWearInfoDao;
+	private SoftWearInfoDao softwfDao;
 	
 	@Test
 	void testQuerySoftWearInfoById() {
-		SoftWearInfo softWearInfo = softWearInfoDao.querySoftWearInfoById(1);
-		assertEquals("虾米音乐", softWearInfo.getSoftwear_name1());
-		
+		List<SoftWearInfo> softwearli = softwfDao.querySoftWearInfo();
+		System.out.println(softwearli.size());
+		for (SoftWearInfo softWearInfo : softwearli) {
+			System.out.print(softWearInfo.getSoftwear_id()+"  ");
+			System.out.print(softWearInfo.getSoftwear_name1()+"  ");
+			System.out.print(softWearInfo.getSoftwear_name2()+"  ");
+			System.out.print(softWearInfo.getStore_path()+"  ");
+			System.out.print(softWearInfo.getSoftWearTypeInfo().getSoftwear_type_id()+"  ");
+			System.out.println(softWearInfo.getSoftWearTypeInfo().getSoftwear_type_name()+"  ");
+		}
 	}
 
 	@Test
 	void testQuerySoftWearInfo() {
-		List<SoftWearInfo> sfInfolist = softWearInfoDao.querySoftWearInfo();
-		for (int i = 0; i < sfInfolist.size(); i++) {
-			System.out.println(sfInfolist.get(i).getSoftwear_id());
-			System.out.println(sfInfolist.get(i).getSoftwear_name1());
-			System.out.println(sfInfolist.get(i).getSoftwear_name2());
-			System.out.println(sfInfolist.get(i).getCategory_name());
-			System.out.println(sfInfolist.get(i).getStore_path());
-			System.out.println(sfInfolist.get(i).getCreate_date());
-		}
-		assertEquals(2, sfInfolist.size());
+		SoftWearInfo softWearInfo = softwfDao.querySoftWearInfoById(1);
+		System.out.println(softWearInfo.getSoftwear_id());
+		System.out.println(softWearInfo.getSoftwear_name1());
+		System.out.println(softWearInfo.getSoftwear_name2());
+		System.out.println(softWearInfo.getSoftWearTypeInfo().getSoftwear_type_name());
 	}
 
 }

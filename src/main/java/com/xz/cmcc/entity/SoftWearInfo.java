@@ -10,7 +10,7 @@ public class SoftWearInfo {
 
 	private String softwear_name2;
 
-	private String category_name;
+	private SoftWearTypeInfo softWearTypeInfo;
 
 	private String store_path;
 
@@ -40,12 +40,12 @@ public class SoftWearInfo {
 		this.softwear_name2 = softwear_name2;
 	}
 
-	public String getCategory_name() {
-		return category_name;
+	public SoftWearTypeInfo getSoftWearTypeInfo() {
+		return softWearTypeInfo;
 	}
 
-	public void setCategory_name(String category_name) {
-		this.category_name = category_name;
+	public void setSoftWearTypeInfo(SoftWearTypeInfo softWearTypeInfo) {
+		this.softWearTypeInfo = softWearTypeInfo;
 	}
 
 	public String getStore_path() {

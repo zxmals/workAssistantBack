@@ -76,12 +76,11 @@ function getDeviceInfo(){
 
 }
 
-function generateSoftInfo(title,data){
-    let imgsrc = "";
-    imgsrc = "操作系统"==title?"os.png":("办公软件"==title?"office.png":("浏览器"==title?"browser.png":("安全软件"==title?"safe.png":"other_.png")))
+function generateSoftInfo(title,img_src,data){
+
     let info = '<tr class="active">\n' +
         '                        <td class="row-vertical-center"><strong><h3 class="text-primary">\n' +
-        '                            <img src="img/'+imgsrc+'" alt="" class="img-rounded" style="width: 70px;height: 70px">\n' +
+        '                            <img src="'+img_src+'" alt="" class="img-rounded" style="width: 70px;height: 70px">\n' +
         title+'</h3></strong></td>\n' +
         '                        <td class="text-center">\n' +
         '                            <table class="table table-bordered">'
@@ -158,31 +157,18 @@ $(function() {
             }
         });
 
+    /*获取软件分类信息*/
+    let softwear_type = null;
+    $.get("workassist/getsoftweartype",function (data,status){softwear_type = data.softweartype});
+
     /*获取所有系统可供下载的软件*/
     $.get("workassist/getsoftwear",
         function (data,status){
-            let data1 = data.softwear.filter(function (item){
-                return item.category_name == "操作系统";
-            });
-            let data2 = data.softwear.filter(function (item){
-                return item.category_name == "办公软件";
-            });
-            let data3 = data.softwear.filter(function (item){
-                return item.category_name == "浏览器";
-            });
-            let data4 = data.softwear.filter(function (item){
-                return item.category_name == "安全软件";
-            });
-            let data5 = data.softwear.filter(function (item){
-                return item.category_name == "其他软件";
-            });
-
             let softinfo = '<table class="table table-bordered">'
-            softinfo += generateSoftInfo("操作系统",data1);
-            softinfo += generateSoftInfo("办公软件",data2);
-            softinfo += generateSoftInfo("浏览器",data3);
-            softinfo += generateSoftInfo("安全软件",data4);
-            softinfo += generateSoftInfo("其他软件",data5);
+            for(let e in softwear_type){
+                let dats = data.softwear.filter(function (item){return item.softWearTypeInfo.softwear_type_id==softwear_type[e].softwear_type_id})
+                softinfo += generateSoftInfo(softwear_type[e].softwear_type_name,softwear_type[e].img_store_path,dats)
+            }
             softinfo += '</table>'
             $('#software div').html(softinfo);
     });
@@ -192,16 +178,6 @@ $(function() {
         $(this).addClass('active').siblings().removeClass('active');
         $('#'+$(this).attr("title")).removeClass("hidden").siblings().addClass('hidden');
     });
-
-    /*软件下载触发事件处理*/
-/*    $('#software div').ready(function(){
-        $('.download').click(function (){
-            $.get("workassist/download?softwear_id="+this.id
-            		,function(data,status){
-                    alert(status,data)
-                });
-        });
-    });*/
 
 /*初始化驱动下拉框数据-电脑品牌*/
     $.get("/workassist/getcomputerbrand"
@@ -286,6 +262,7 @@ $(function() {
         }
     });
 
+    /*获取APP信息*/
     $.get("workassist/getappinfo"
         ,function (data,status){
         appinfos = data.appinfo
@@ -301,16 +278,18 @@ $(function() {
     });
 
 
+
     $('#cmccapp .col-md-3 tabl').ready(function (){
 
         $("#cmccapp .col-md-3 table").bind("mouseenter",function (){
             url = $(this).find('tr td a').attr('href');
             $(this).find('tr td div').addClass('hidden');
             $(this).find('tr td').qrcode({width: 130,height: 130,text: toUtf8(url)});
-
+            $(this).addClass("cmcc-app-background");
         })
 
         $("#cmccapp .col-md-3 table").bind('mouseleave',function (){
+            $(this).removeClass("cmcc-app-background");
             $(this).find('tr td div').removeClass('hidden');
             $(this).find('tr td canvas').remove();
         });

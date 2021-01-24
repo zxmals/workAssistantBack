@@ -33,6 +33,6 @@ body {
     width: 24.2%!important;
 }
 
-#cmccapp .col-md-3 table {
-    /*background-color: #dfe5e3;*/
+.cmcc-app-background {
+    background-color: #797e7c
 }

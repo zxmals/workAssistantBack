@@ -3,14 +3,29 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.xz.cmcc.dao.SoftWearInfoDao">
-	<select id="querySoftWearInfo" resultType="com.xz.cmcc.entity.SoftWearInfo" flushCache="true" useCache="false">
-		SELECT  softwear_id,softwear_name1,softwear_name2,category_name,store_path,create_date
-		FROM softwearinfo	
-	</select>
+
+	<resultMap type="com.xz.cmcc.entity.SoftWearInfo" id="softwearmap">
+		<id column="softwear_id" property="softwear_id"/>
+		<result column="softwear_name1" property="softwear_name1" />
+		<result column="softwear_name2" property="softwear_name2" />
+		<result column="store_path" property="store_path" />
+		<result column="create_date" property="create_date" />
+		<association property="softWearTypeInfo" column="softwear_type_id" javaType="com.xz.cmcc.entity.SoftWearTypeInfo" select="com.xz.cmcc.dao.SoftWearTypeInfoDao.querySoftWearTypeInfoById" />
+	</resultMap>
 	
-	<select id="querySoftWearInfoById" resultType="com.xz.cmcc.entity.SoftWearInfo" flushCache="true" useCache="false">
-		SELECT  softwear_id,softwear_name1,softwear_name2,category_name,store_path,create_date
-		FROM softwearinfo	
+	<select id="querySoftWearInfo" resultMap="softwearmap" flushCache="true" useCache="false">
+		SELECT  softwear_id,softwear_name1,softwear_name2,store_path,create_date
+		,b.softwear_type_id,b.softwear_type_name,b.img_store_path
+		FROM softwearinfo	a 
+		left join softweartypeinfo b on a.softwear_type_id = b.softwear_type_id
+	</select>	
+	
+	<select id="querySoftWearInfoById" resultMap="softwearmap" flushCache="true" useCache="false">
+		SELECT  softwear_id,softwear_name1,softwear_name2,store_path,create_date
+		,b.softwear_type_id,b.softwear_type_name,b.img_store_path
+		FROM softwearinfo	a 
+		left join softweartypeinfo b on a.softwear_type_id = b.softwear_type_id	
 		where softwear_id = #{softwear_id}
-	</select>
+	</select>	
+	
 </mapper>        
