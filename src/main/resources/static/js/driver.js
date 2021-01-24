@@ -164,7 +164,15 @@ $(function() {
     /*获取所有系统可供下载的软件*/
     $.get("workassist/getsoftwear",
         function (data,status){
-            let softinfo = '<table class="table table-bordered">'
+            let softinfo = '                    <div class="input-group">\n' +
+                '                        <input type="text" class="form-control" placeholder="输入软件名称……">\n' +
+                '                        <span class="input-group-btn">\n' +
+                '                                <button class="btn btn-default" type="button">\n' +
+                '                                    <span class="glyphicon glyphicon-search" aria-hidden="true"></span>\n' +
+                '                                </button>\n' +
+                '                        </span>\n' +
+                '                    </div>'
+                softinfo += '<table class="table table-bordered">'
             for(let e in softwear_type){
                 let dats = data.softwear.filter(function (item){return item.softWearTypeInfo.softwear_type_id==softwear_type[e].softwear_type_id})
                 softinfo += generateSoftInfo(softwear_type[e].softwear_type_name,softwear_type[e].img_store_path,dats)
@@ -228,8 +236,8 @@ $(function() {
         });
     });
 
+    /*驱动界面触发查询事件*/
     $('#hardware .col-md-2 button').click(function (){
-
         if($('#hardware .col-md-4 select').selectpicker('val')!=""&&$('#hardware .col-md-3 select').eq(0).selectpicker('val')!=""&&$('#hardware .col-md-3 select').eq(1).selectpicker('val')!=""){
             computer_id = $('#hardware .col-md-4 select').eq(0).find('option:selected').attr("compid");
             os_id = $('#hardware .col-md-3 select').eq(1).find('option:selected').attr("customs");
@@ -279,7 +287,8 @@ $(function() {
 
 
 
-    $('#cmccapp .col-md-3 tabl').ready(function (){
+    /*app界面鼠标移入移出*/
+    $('#cmccapp .col-md-3 table').ready(function (){
 
         $("#cmccapp .col-md-3 table").bind("mouseenter",function (){
             url = $(this).find('tr td a').attr('href');
@@ -295,6 +304,41 @@ $(function() {
         });
     });
 
+    /*驱动查询-二次筛选服务*/
+    $('#hardware .input-group button').click(function (){
+        searchinfo = $('#hardware .input-group input').val();
+        for(let i=0;i<$('#hardware table tbody tr').length;i++){
+            if($('#hardware table tbody tr').eq(i).find('td').eq(1).get(0).innerText.indexOf(searchinfo)<0){
+                $('#hardware table tbody tr').eq(i).addClass('hidden');
+            }else{
+                $('#hardware table tbody tr').eq(i).removeClass('hidden');
+            }
+        }
+    });
+
+
+    /*$('#software table table tr').eq(0).parent().parent().parent().parent().parent()*/
+
+    $('#software div').ready(function (){
+        $('#software .input-group button').click(function (){
+            searchinfo = $('#software .input-group input').val();
+            for(let i=0;i<$('#software table table tr').length;i++){
+
+                if($('#software table table tr').eq(i).find('td').eq(0).get(0).innerText.indexOf(searchinfo)<0){
+                    $('#software table table tr').eq(i).addClass('hidden');
+                }else{
+                    $('#software table table tr').eq(i).removeClass('hidden');
+                }
+
+/*                if($('#software table table tr').eq(i).siblings().find('td').eq(0).get(0).innerText.indexOf(searchinfo)<0){
+                    $('#software table table tr').eq(0).parent().parent().parent().parent().parent().addClass('hidden');
+                }else{
+                    $('#software table table tr').eq(0).parent().parent().parent().parent().parent().removeClass('hidden');
+                }*/
+
+            }
+        });
+    });
 });
 
 
