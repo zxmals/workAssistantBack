@@ -283,25 +283,23 @@ $(function() {
             }
             $('#cmccapp .panel .container .row div').remove()
             $('#cmccapp .panel .container .row').append(info);
-    });
+            appinfo2 = $('#cmccapp .panel .container .row .col-md-3 table');
+            for(let i=0;i<appinfo2.length;i++){
+                appinfo2.eq(i).find('td').qrcode({width: 130,height: 130,text: toUtf8(appinfo2.eq(i).find('td a').attr('href')+"")});
+                appinfo2.eq(i).find('td canvas').addClass('hidden')
+            }
+            /*app界面鼠标移入移出*/
+            $("#cmccapp .col-md-3 table").bind("mouseenter",function (){
+                $(this).find('tr td div').addClass('hidden');
+                $(this).find('tr td canvas').removeClass('hidden');
+                $(this).addClass("cmcc-app-background");
+            })
 
-
-
-    /*app界面鼠标移入移出*/
-    $('#cmccapp .col-md-3 table').ready(function (){
-
-        $("#cmccapp .col-md-3 table").bind("mouseenter",function (){
-            url = $(this).find('tr td a').attr('href');
-            $(this).find('tr td div').addClass('hidden');
-            $(this).find('tr td').qrcode({width: 130,height: 130,text: toUtf8(url)});
-            $(this).addClass("cmcc-app-background");
-        })
-
-        $("#cmccapp .col-md-3 table").bind('mouseleave',function (){
-            $(this).removeClass("cmcc-app-background");
-            $(this).find('tr td div').removeClass('hidden');
-            $(this).find('tr td canvas').remove();
-        });
+            $("#cmccapp .col-md-3 table").bind('mouseleave',function (){
+                $(this).removeClass("cmcc-app-background");
+                $(this).find('tr td div').removeClass('hidden');
+                $(this).find('tr td canvas').addClass('hidden');
+            });
     });
 
     /*驱动查询-二次筛选服务*/
