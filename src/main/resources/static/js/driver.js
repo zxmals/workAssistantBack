@@ -179,6 +179,28 @@ $(function() {
             }
             softinfo += '</table>'
             $('#software div').html(softinfo);
+
+            $('#software .input-group button').click(function (){
+                searchinfo = $('#software .input-group input').val().toLowerCase();
+
+                let k=0;
+                for(let i=0;i<$('#software table:first-child').length;i++){
+                    k=0;
+                    for(let j=0;j<$('#software table:first-child').eq(i).find('tr').length;j++){
+                        if($('#software table:first-child').eq(i).find('tr').eq(j).find('td').eq(0).get(0).innerText.toLowerCase().indexOf(searchinfo)<0){
+                            $('#software table:first-child').eq(i).find('tr').eq(j).addClass('hidden');
+                            k += 1;
+                        }else{
+                            $('#software table:first-child').eq(i).find('tr').eq(j).removeClass('hidden');
+                        }
+                    }
+                    if(k==$('#software table:first-child').eq(i).find('tr').length){
+                        $('#software table:first-child').eq(i).parent().parent().eq(0).addClass('hidden')
+                    }else{
+                        $('#software table:first-child').eq(i).parent().parent().eq(0).removeClass('hidden')
+                    }
+                }
+            });
     });
 
     /*页面切换*/
@@ -318,7 +340,7 @@ $(function() {
     /*$('#software table table tr').eq(0).parent().parent().parent().parent().parent()*/
 
     $('#software div').ready(function (){
-        $('#software .input-group button').click(function (){
+/*        $('#software .input-group button').click(function (){
             searchinfo = $('#software .input-group input').val();
             for(let i=0;i<$('#software table table tr').length;i++){
 
@@ -328,14 +350,14 @@ $(function() {
                     $('#software table table tr').eq(i).removeClass('hidden');
                 }
 
-/*                if($('#software table table tr').eq(i).siblings().find('td').eq(0).get(0).innerText.indexOf(searchinfo)<0){
+/!*                if($('#software table table tr').eq(i).siblings().find('td').eq(0).get(0).innerText.indexOf(searchinfo)<0){
                     $('#software table table tr').eq(0).parent().parent().parent().parent().parent().addClass('hidden');
                 }else{
                     $('#software table table tr').eq(0).parent().parent().parent().parent().parent().removeClass('hidden');
-                }*/
+                }*!/
 
             }
-        });
+        });*/
     });
 });
 
