@@ -180,6 +180,7 @@ $(function() {
             softinfo += '</table>'
             $('#software div').html(softinfo);
 
+            /*软件服务界面-触动二次查询事件*/
             $('#software .input-group button').click(function (){
                 searchinfo = $('#software .input-group input').val().toLowerCase();
 
@@ -322,13 +323,25 @@ $(function() {
                 $(this).find('tr td div').removeClass('hidden');
                 $(this).find('tr td canvas').addClass('hidden');
             });
+
+            /*移动APP界面-触发二次筛选查询事件*/
+            $('#cmccapp .input-group button').click(function (){
+                searchinfo = $('#cmccapp .input-group input').val().toLowerCase();
+                for(let i=0;i<$('#cmccapp .panel .container .row .col-md-3').length;i++){
+                    if($('#cmccapp .panel .container .row .col-md-3').eq(i).find('td a').eq(0).get(0).innerText.toLowerCase().indexOf(searchinfo)<0){
+                        $('#cmccapp .panel .container .row .col-md-3').eq(i).addClass('hidden')
+                    }else{
+                        $('#cmccapp .panel .container .row .col-md-3').eq(i).removeClass('hidden')
+                    }
+                }
+            });
     });
 
     /*驱动查询-二次筛选服务*/
     $('#hardware .input-group button').click(function (){
-        searchinfo = $('#hardware .input-group input').val();
+        searchinfo = $('#hardware .input-group input').val().toLowerCase();
         for(let i=0;i<$('#hardware table tbody tr').length;i++){
-            if($('#hardware table tbody tr').eq(i).find('td').eq(1).get(0).innerText.indexOf(searchinfo)<0){
+            if($('#hardware table tbody tr').eq(i).find('td').eq(1).get(0).innerText.toLowerCase().indexOf(searchinfo)<0){
                 $('#hardware table tbody tr').eq(i).addClass('hidden');
             }else{
                 $('#hardware table tbody tr').eq(i).removeClass('hidden');
@@ -336,29 +349,6 @@ $(function() {
         }
     });
 
-
-    /*$('#software table table tr').eq(0).parent().parent().parent().parent().parent()*/
-
-    $('#software div').ready(function (){
-/*        $('#software .input-group button').click(function (){
-            searchinfo = $('#software .input-group input').val();
-            for(let i=0;i<$('#software table table tr').length;i++){
-
-                if($('#software table table tr').eq(i).find('td').eq(0).get(0).innerText.indexOf(searchinfo)<0){
-                    $('#software table table tr').eq(i).addClass('hidden');
-                }else{
-                    $('#software table table tr').eq(i).removeClass('hidden');
-                }
-
-/!*                if($('#software table table tr').eq(i).siblings().find('td').eq(0).get(0).innerText.indexOf(searchinfo)<0){
-                    $('#software table table tr').eq(0).parent().parent().parent().parent().parent().addClass('hidden');
-                }else{
-                    $('#software table table tr').eq(0).parent().parent().parent().parent().parent().removeClass('hidden');
-                }*!/
-
-            }
-        });*/
-    });
 });
 
 
