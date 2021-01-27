@@ -10,4 +10,9 @@
 		where app_type_id = #{app_type_id}	
 	</select>
 	
+	<select id="queryAppTypeInfo" resultType="com.xz.cmcc.entity.AppTypeInfo" flushCache="true" useCache="false">
+		SELECT app_type_id,app_type_name
+		FROM apptypeinfo 
+	</select>	
+	
 </mapper>        

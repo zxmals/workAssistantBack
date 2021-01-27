@@ -293,24 +293,37 @@ $(function() {
         }
     });
 
+    let apptypeinfo = ""
+    $.get("workassist/getapptype",function (data,status){apptypeinfo=data.apptype});
+
     /*获取APP信息*/
     $.get("workassist/getappinfo"
         ,function (data,status){
         appinfos = data.appinfo
             let info = ""
-            for(let e in appinfos){
-                info += '<div class="col-md-3"><table class="table table-bordered" style="height: 165px"><tbody><tr><td class="row-vertical-center"><div>'
-                info += '<img src="'+appinfos[e].img_store_path+'" height="80px"><br>'
-                info += '<h5 class="text-primary"><a href="'+appinfos[e].app_href+'">'+appinfos[e].app_name+'</a></h5>'
-                info += '</div></td></tr></tbody></table></div>'
+            for(let i in apptypeinfo){
+                info += '<div class="panel panel-default"><div class="panel-heading"><h3 class="panel-title">'+apptypeinfo[i].app_type_name+'</h3></div>'
+                info += '<div class="container" style="padding-top: 15px"><div class="row">'
+                data2 = appinfos.filter(function (item){return item.apptypeInfo.app_type_id==apptypeinfo[i].app_type_id})
+                for(let j=0;j<data2.length;j++){
+                    info += '<div class="col-md-3"><table class="table table-bordered" style="height: 165px"><tbody><tr><td class="row-vertical-center"><div>'
+                    info += '<img src="'+data2[j].img_store_path+'" height="80px"><br>'
+                    info += '<h5 class="text-primary"><a href="'+data2[j].app_href+'">'+data2[j].app_name+'</a></h5>'
+                    info += '</div></td></tr></tbody></table></div>'
+                }
+                info += '</div></div>'
             }
-            $('#cmccapp .panel .container .row div').remove()
-            $('#cmccapp .panel .container .row').append(info);
+            $('#cmccapp .panel div').remove()
+            $('#cmccapp .panel').append(info);
+
+            /*生成链接对应二维码*/
             appinfo2 = $('#cmccapp .panel .container .row .col-md-3 table');
             for(let i=0;i<appinfo2.length;i++){
                 appinfo2.eq(i).find('td').qrcode({width: 130,height: 130,text: toUtf8(appinfo2.eq(i).find('td a').attr('href')+"")});
                 appinfo2.eq(i).find('td canvas').addClass('hidden')
             }
+
+
             /*app界面鼠标移入移出*/
             $("#cmccapp .col-md-3 table").bind("mouseenter",function (){
                 $(this).find('tr td div').addClass('hidden');
