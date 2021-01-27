@@ -311,10 +311,10 @@ $(function() {
                     info += '<h5 class="text-primary"><a href="'+data2[j].app_href+'">'+data2[j].app_name+'</a></h5>'
                     info += '</div></td></tr></tbody></table></div>'
                 }
-                info += '</div></div>'
+                info += '</div></div></div>'
             }
-            $('#cmccapp .panel div').remove()
-            $('#cmccapp .panel').append(info);
+            $('#cmccapp .panel').remove()
+            $('#cmccapp').append(info);
 
             /*生成链接对应二维码*/
             appinfo2 = $('#cmccapp .panel .container .row .col-md-3 table');
@@ -340,12 +340,25 @@ $(function() {
             /*移动APP界面-触发二次筛选查询事件*/
             $('#cmccapp .input-group button').click(function (){
                 searchinfo = $('#cmccapp .input-group input').val().toLowerCase();
-                for(let i=0;i<$('#cmccapp .panel .container .row .col-md-3').length;i++){
-                    if($('#cmccapp .panel .container .row .col-md-3').eq(i).find('td a').eq(0).get(0).innerText.toLowerCase().indexOf(searchinfo)<0){
-                        $('#cmccapp .panel .container .row .col-md-3').eq(i).addClass('hidden')
-                    }else{
-                        $('#cmccapp .panel .container .row .col-md-3').eq(i).removeClass('hidden')
+
+                let k=0;
+                for(let j=0;j<$('#cmccapp .panel').length;j++){
+                    k=0;
+                    for(let i=0;i<$('#cmccapp .panel').eq(j).find('.container .row .col-md-3').length;i++){
+                        if($('#cmccapp .panel').eq(j).find('.container .row .col-md-3').eq(i).find('td a').eq(0).get(0).innerText.toLowerCase().indexOf(searchinfo)<0){
+                            $('#cmccapp .panel').eq(j).find('.container .row .col-md-3').eq(i).addClass('hidden');
+                            k += 1;
+                        }else{
+                            $('#cmccapp .panel').eq(j).find('.container .row .col-md-3').eq(i).removeClass('hidden')
+                        }
                     }
+
+                    if(k==$('#cmccapp .panel').eq(j).find('.container .row .col-md-3').length){
+                        $('#cmccapp .panel').eq(j).addClass('hidden');
+                    }else{
+                        $('#cmccapp .panel').eq(j).removeClass('hidden');
+                    }
+
                 }
             });
     });
