@@ -3,7 +3,7 @@ package com.xz.cmcc;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 
 @SpringBootApplication
 @Controller
@@ -13,9 +13,9 @@ public class WorkAssistantbackApplication {
 		SpringApplication.run(WorkAssistantbackApplication.class, args);
 	}
 	
-	@RequestMapping(value= "/home/index")
+	@GetMapping(value= "/getstart/index")
 	public String index() {
-		return "index";
+		return "/index";
 	}
 
 }

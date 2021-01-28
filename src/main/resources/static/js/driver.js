@@ -6,11 +6,26 @@ let computermodelinfo = null;
 let appinfo = null;
 
 /*设备信息页*/
-let locator = new ActiveXObject ("WbemScripting.SWbemLocator");
-let service = locator.ConnectServer(".");
+let locator = null
+let service = null
 let macAddress = "";
 let ipAddress = "";
 
+function checkIfIe(){
+    if(window.ActiveXObject || "ActiveXObject" in window){
+        try{
+            locator = new ActiveXObject ("WbemScripting.SWbemLocator");
+            service = locator.ConnectServer(".");
+        }catch (e){
+            $('#myModal').modal();
+            return false;
+        }
+        return true;
+    }else{
+        swal("","当前浏览器不支持通过调用设备信息获取设备资产信息，请更换IE系列浏览器！（其他功能可以正常使用）","error");
+        return false;
+    }
+}
 
 /*CPU 信息*/
 function cpuInfo() {
@@ -87,7 +102,7 @@ function generateSoftInfo(title,img_src,data){
     for(let i in data){
         info += '<tr>' +
             '<td>' + data[i].softwear_name1 + '</td>'
-        info += '<td><p class="text-primary" style="width: auto!important;"><a id="'+data[i].softwear_id+'" class="download" href=workassist/download?softwear_id='+parseInt(data[i].softwear_id)+'><span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span>&nbsp;点击下载</a></p></td>' +
+        info += '<td><p class="text-primary" style="width: auto!important;"><a id="'+data[i].softwear_id+'" class="download" download="'+data[i].softwear_name1+'" href=/workassist/download?softwear_id='+parseInt(data[i].softwear_id)+'><span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span>&nbsp;点击下载</a></p></td>' +
             '</tr>';
     }
     info += '</table></td></tr>';
@@ -115,13 +130,12 @@ function toUtf8(str) {
     return out;
 }
 
-$(function() {
-    let info = getDeviceInfo();
+function generateDeviceDom(info){
     $('#deviceuse ul').html(info);
     /*
-    根据用户设备信息（mac/ip)获取用户以及资产信息
-    首先根据MAC地址查询*/
-    $.get("workassist/getuserpropbymac?macAddress="+macAddress,
+根据用户设备信息（mac/ip)获取用户以及资产信息
+首先根据MAC地址查询*/
+    $.get("/workassist/getuserpropbymac?macAddress="+macAddress,
         function(data,status){
             if(data.userprop != null){
                 let datas = data.userprop
@@ -136,7 +150,7 @@ $(function() {
                 $('#deviceuser ul').html(userinfo);
             }else{
                 /*MAC地址查不到就用IP地址查询*/
-                $.get("workassist/getuserpropbyip?ipAddress="+ipAddress,
+                $.get("/workassist/getuserpropbyip?ipAddress="+ipAddress,
                     function (data,status){
                         if(data.userprop!=null){
                             let datas = data.userprop
@@ -153,16 +167,26 @@ $(function() {
                             let userinfo = "未查询到当前设备资产对应用户信息！";
                             $('#deviceuser ul').html(userinfo);
                         }
-                });
+                    });
             }
         });
+}
+
+
+$(function() {
+
+    let infodevice = "";
+    if(checkIfIe()){
+        infodevice = getDeviceInfo();
+        generateDeviceDom(infodevice);
+    }
 
     /*获取软件分类信息*/
     let softwear_type = null;
-    $.get("workassist/getsoftweartype",function (data,status){softwear_type = data.softweartype});
+    $.get("/workassist/getsoftweartype",function (data,status){softwear_type = data.softweartype});
 
     /*获取所有系统可供下载的软件*/
-    $.get("workassist/getsoftwear",
+    $.get("/workassist/getsoftwear",
         function (data,status){
             let softinfo = '                    <div class="input-group">\n' +
                 '                        <input type="text" class="form-control" placeholder="输入软件名称……">\n' +
@@ -264,7 +288,7 @@ $(function() {
         if($('#hardware .col-md-4 select').selectpicker('val')!=""&&$('#hardware .col-md-3 select').eq(0).selectpicker('val')!=""&&$('#hardware .col-md-3 select').eq(1).selectpicker('val')!=""){
             computer_id = $('#hardware .col-md-4 select').eq(0).find('option:selected').attr("compid");
             os_id = $('#hardware .col-md-3 select').eq(1).find('option:selected').attr("customs");
-            $.get("workassist/getdriverinfobycmandos?computer_id="+computer_id+"&os_id="+os_id
+            $.get("/workassist/getdriverinfobycmandos?computer_id="+computer_id+"&os_id="+os_id
                 ,function (data,status){
                     $('#hardware .panel-body table tbody').find('tr').remove();
                     driverinfoli = data.dirverinfo;
@@ -275,7 +299,7 @@ $(function() {
                         infodriver += '<td style="text-align: center">'+driverinfoli[e].driver_name1+'</td>'
                         infodriver += '<td style="text-align: center">';
                         infodriver += '<p class="text-primary" style="width: auto !important;">';
-                        infodriver += '<a class="download" id="'+driverinfoli[e].driver_id+'" href="workassist/driverdownload?driver_id='+driverinfoli[e].driver_id+'" ><span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span> 点击下载</a></p>';
+                        infodriver += '<a class="download" id="'+driverinfoli[e].driver_id+'"  download="'+driverinfoli[e].driver_name2+'"  href="/workassist/driverdownload?driver_id='+driverinfoli[e].driver_id+'" ><span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span> 点击下载</a></p>';
                         infodriver += '</td></tr>';
                         i += 1;
                     }
@@ -294,10 +318,10 @@ $(function() {
     });
 
     let apptypeinfo = ""
-    $.get("workassist/getapptype",function (data,status){apptypeinfo=data.apptype});
+    $.get("/workassist/getapptype",function (data,status){apptypeinfo=data.apptype});
 
     /*获取APP信息*/
-    $.get("workassist/getappinfo"
+    $.get("/workassist/getappinfo"
         ,function (data,status){
         appinfos = data.appinfo
             let info = ""
